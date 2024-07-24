@@ -430,6 +430,14 @@ private void runShellCommand(string shellCommand)
     spawnShell(shellCommand);
 }
 
+private void runProcessCommand(string processCommand)
+{
+    import std.process : spawnProcess;
+    import std.array : split;
+
+    spawnProcess(processCommand.split(" "));
+}
+
 void loadAllConfigs()
 {
     import std.file : thisExePath;
@@ -645,6 +653,9 @@ void processCommand(string[] command)
         case "sh":
             runShellCommand(command[1]);
             break;
+        case "shs":
+            runProcessCommand(command[1]);
+            break;
         case "loadconfig":
             loadConfig(command[1]);
             break;
@@ -749,6 +760,9 @@ bool verifyCommand(string[] command)
             if (!argCount(1, 1)) return false;
             break;
         case "sh":
+            if (!argCount(1, 1)) return false;
+            break;
+        case "shs":
             if (!argCount(1, 1)) return false;
             break;
         case "loadconfig":
